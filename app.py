@@ -65,7 +65,7 @@ Target Job Description:
                     "content": text
                 }
             ],
-            model="llama3-8b-8192", 
+            model="llama3-70b-8192", 
             temperature=0.5,
             max_tokens=2048, # Increased max tokens for full resume generation
             top_p=1,
