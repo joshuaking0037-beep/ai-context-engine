@@ -9,7 +9,6 @@ load_dotenv()
 app = Flask(__name__)
 
 # Initialize Groq client
-# The client automatically looks for the GROQ_API_KEY environment variable
 try:
     groq_client = Groq()
 except Exception as e:
@@ -30,17 +29,29 @@ def analyze():
     task = data.get('task', 'summarize')
 
     if not text:
-        return jsonify({"error": "No text provided."}), 400
+        return jsonify({"error": "No input text provided."}), 400
 
     # Map the task to a specific prompt
-    prompts = {
-        'summarize': "Provide a clear, concise summary of the following text:",
-        'action_items': "Extract a bulleted list of actionable items or next steps from the following text:",
-        'key_entities': "Identify and list the key entities (people, organizations, locations, concepts) mentioned in the following text:"
-    }
+    if task == 'tune_resume':
+        job_title = data.get('job_title', '')
+        job_desc = data.get('job_description', '')
+        system_prompt = f"""You are an expert executive resume writer and career coach.
+Your task is to take the user's general CV and tailor it to perfectly match the provided Job Title and Job Description.
+Highlight the most relevant skills, restructure bullet points to emphasize impact, and use strong action verbs.
+Format the output as a professional resume using Markdown. Do not include introductory or concluding conversational text, just output the tailored resume.
 
-    system_prompt = prompts.get(task, prompts['summarize'])
-    system_prompt += "\nFormat your response cleanly using Markdown."
+Target Job Title: {job_title}
+Target Job Description:
+{job_desc}
+"""
+    else:
+        prompts = {
+            'summarize': "Provide a clear, concise summary of the following text:",
+            'action_items': "Extract a bulleted list of actionable items or next steps from the following text:",
+            'key_entities': "Identify and list the key entities (people, organizations, locations, concepts) mentioned in the following text:"
+        }
+        system_prompt = prompts.get(task, prompts['summarize'])
+        system_prompt += "\nFormat your response cleanly using Markdown."
 
     try:
         chat_completion = groq_client.chat.completions.create(
@@ -54,9 +65,9 @@ def analyze():
                     "content": text
                 }
             ],
-            model="llama3-8b-8192", # Using the fast 8b model for low latency
+            model="llama3-8b-8192", 
             temperature=0.5,
-            max_tokens=1024,
+            max_tokens=2048, # Increased max tokens for full resume generation
             top_p=1,
         )
         
@@ -68,5 +79,4 @@ def analyze():
         return jsonify({"error": "Failed to process text with AI. Please try again."}), 500
 
 if __name__ == '__main__':
-    # Run the application in debug mode for development
     app.run(debug=True, port=5000)

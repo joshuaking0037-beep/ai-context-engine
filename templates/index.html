@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Context Engine</title>
-    <!-- Google Fonts for modern typography -->
+    <title>AI Context Engine & Resume Tuner</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Marked.js for parsing Markdown response from the LLM -->
+    <!-- Marked.js for parsing Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- html2pdf for client-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -24,30 +26,59 @@
 
         <main class="main-content">
             <div class="glass-panel input-section">
+                <!-- Tab Navigation -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="general-tab">Text Analyzer</button>
+                    <button class="tab-btn" data-tab="resume-tab">Resume Tuner</button>
+                </div>
+
                 <form id="analyze-form">
-                    <div class="form-group">
-                        <label for="task-select">Select AI Task</label>
-                        <select id="task-select" name="task" required>
-                            <option value="summarize">Summarize Document</option>
-                            <option value="action_items">Extract Action Items</option>
-                            <option value="key_entities">Identify Key Entities</option>
-                        </select>
+                    <!-- General Analysis Inputs -->
+                    <div id="general-inputs" class="tab-content active">
+                        <div class="form-group">
+                            <label for="task-select">Select AI Task</label>
+                            <select id="task-select" name="task">
+                                <option value="summarize">Summarize Document</option>
+                                <option value="action_items">Extract Action Items</option>
+                                <option value="key_entities">Identify Key Entities</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Resume Tuner Inputs -->
+                    <div id="resume-inputs" class="tab-content hidden">
+                        <input type="hidden" id="resume-task" value="tune_resume">
+                        <div class="form-group">
+                            <label for="job-title">Target Job Title</label>
+                            <input type="text" id="job-title" class="text-input" placeholder="e.g. Senior Automation Engineer">
+                        </div>
+                        <div class="form-group">
+                            <label for="job-description">Job Description</label>
+                            <textarea id="job-description" rows="5" placeholder="Paste the full job description here..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Common Input (Text/CV) -->
                     <div class="form-group">
-                        <label for="input-text">Input Text</label>
-                        <textarea id="input-text" name="text" rows="10" placeholder="Paste your text or document content here..." required></textarea>
+                        <label id="main-text-label" for="input-text">Input Text</label>
+                        <textarea id="input-text" name="text" rows="8" placeholder="Paste your text or general CV here..." required></textarea>
                     </div>
 
                     <button type="submit" id="submit-btn" class="primary-btn">
-                        <span class="btn-text">Analyze Content</span>
+                        <span class="btn-text">Process Content</span>
                         <div class="loader hidden" id="btn-loader"></div>
                     </button>
                 </form>
             </div>
 
             <div class="glass-panel output-section">
-                <h2>Analysis Result</h2>
+                <div class="output-header">
+                    <h2>AI Output</h2>
+                    <button id="download-pdf-btn" class="secondary-btn hidden">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download PDF
+                    </button>
+                </div>
                 <div id="result-container" class="result-placeholder">
                     Results will appear here...
                 </div>
