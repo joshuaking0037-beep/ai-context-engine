@@ -8,13 +8,11 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --input-bg: rgba(15, 23, 42, 0.6);
 }
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
@@ -27,7 +25,6 @@ body {
     position: relative;
     padding: 2rem 0;
 }
-
 /* Background gradient blobs */
 .background-shapes {
     position: fixed;
@@ -38,7 +35,6 @@ body {
     z-index: -1;
     overflow: hidden;
 }
-
 .shape {
     position: absolute;
     border-radius: 50%;
@@ -46,7 +42,6 @@ body {
     opacity: 0.5;
     animation: float 20s infinite ease-in-out;
 }
-
 .shape-1 {
     width: 500px;
     height: 500px;
@@ -54,7 +49,6 @@ body {
     top: -100px;
     left: -100px;
 }
-
 .shape-2 {
     width: 600px;
     height: 600px;
@@ -63,13 +57,11 @@ body {
     right: -100px;
     animation-delay: -10s;
 }
-
 @keyframes float {
     0%, 100% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(30px, -50px) scale(1.1); }
     66% { transform: translate(-20px, 20px) scale(0.9); }
 }
-
 .container {
     width: 100%;
     max-width: 1100px;
@@ -78,11 +70,9 @@ body {
     flex-direction: column;
     gap: 2rem;
 }
-
 .header {
     text-align: center;
 }
-
 .header h1 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -91,23 +81,19 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .header p {
     color: var(--text-muted);
 }
-
 .main-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
 }
-
 @media (max-width: 768px) {
     .main-content {
         grid-template-columns: 1fr;
     }
 }
-
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
@@ -119,7 +105,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 /* Tabs */
 .tabs {
     display: flex;
@@ -128,7 +113,6 @@ body {
     border-bottom: 1px solid var(--glass-border);
     padding-bottom: 1rem;
 }
-
 .tab-btn {
     background: transparent;
     border: none;
@@ -140,17 +124,14 @@ body {
     border-radius: 0.5rem;
     transition: all 0.3s ease;
 }
-
 .tab-btn:hover {
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-main);
 }
-
 .tab-btn.active {
     background: var(--primary-color);
     color: white;
 }
-
 .tab-content {
     display: none;
 }
@@ -158,16 +139,13 @@ body {
     display: block;
     animation: fadeIn 0.3s ease;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 .form-group {
     margin-bottom: 1.5rem;
 }
-
 label {
     display: block;
     margin-bottom: 0.5rem;
@@ -175,7 +153,6 @@ label {
     font-size: 0.9rem;
     color: var(--text-muted);
 }
-
 select, textarea, .text-input {
     width: 100%;
     background: var(--input-bg);
@@ -187,17 +164,14 @@ select, textarea, .text-input {
     font-size: 1rem;
     transition: all 0.3s ease;
 }
-
 select:focus, textarea:focus, .text-input:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
-
 textarea {
     resize: vertical;
 }
-
 .primary-btn {
     width: 100%;
     background: var(--primary-color);
@@ -215,20 +189,16 @@ textarea {
     gap: 0.5rem;
     margin-top: auto;
 }
-
 .primary-btn:hover {
     background: var(--primary-hover);
 }
-
 .primary-btn:active {
     transform: scale(0.98);
 }
-
 .primary-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
-
 .output-header {
     display: flex;
     justify-content: space-between;
@@ -237,11 +207,9 @@ textarea {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--glass-border);
 }
-
 .output-header h2 {
     font-size: 1.25rem;
 }
-
 .secondary-btn {
     background: rgba(16, 185, 129, 0.2);
     color: #34d399;
@@ -256,12 +224,10 @@ textarea {
     gap: 0.5rem;
     transition: all 0.2s ease;
 }
-
 .secondary-btn:hover {
     background: rgba(16, 185, 129, 0.3);
     color: #6ee7b7;
 }
-
 /* Loading animation */
 .loader {
     border: 3px solid rgba(255, 255, 255, 0.3);
@@ -271,16 +237,13 @@ textarea {
     height: 20px;
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 .hidden {
     display: none !important;
 }
-
 #result-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -290,7 +253,6 @@ textarea {
     border-radius: 0.5rem;
     border: 1px solid var(--glass-border);
 }
-
 .result-placeholder {
     color: var(--text-muted);
     font-style: italic;
@@ -299,40 +261,32 @@ textarea {
     justify-content: center;
     height: 100%;
 }
-
 /* Markdown styling within result container */
 #result-container h1, #result-container h2, #result-container h3 {
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     color: #f8fafc;
 }
-
 #result-container h1 { font-size: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; }
 #result-container h2 { font-size: 1.25rem; }
-
 #result-container p {
     margin-bottom: 1rem;
 }
-
 #result-container ul, #result-container ol {
     margin-bottom: 1rem;
     padding-left: 1.5rem;
 }
-
 #result-container li {
     margin-bottom: 0.5rem;
 }
-
 #result-container strong {
     color: #e2e8f0;
 }
-
 .footer {
     text-align: center;
     color: var(--text-muted);
     font-size: 0.875rem;
 }
-
 /* Print specific styles for PDF generation */
 .pdf-mode {
     background: white !important;
@@ -342,4 +296,13 @@ textarea {
 }
 .pdf-mode h1, .pdf-mode h2, .pdf-mode h3, .pdf-mode strong {
     color: black !important;
+}
+/* Blue Letterhead for the very first h1 in the resume */
+.pdf-mode h1:first-child {
+    background-color: #1e40af !important; /* Professional Blue */
+    color: white !important;
+    padding: 30px !important;
+    text-align: center !important;
+    margin: -40px -40px 30px -40px !important; /* Stretch to edges */
+    border-bottom: none !important;
 }
